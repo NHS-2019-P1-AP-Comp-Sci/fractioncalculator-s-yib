@@ -47,6 +47,16 @@ public class FracCalc {
 			int resultDenom = value1Denom * value2Denom;
 			resultWhole += resultNum / resultDenom;
 			resultNum = resultNum % resultDenom;
+			int factor = simplify(resultNum, resultDenom);
+			resultNum /= factor;
+			resultDenom /= factor;
+			if (resultWhole < 0 && resultNum*1.0/resultDenom > 0) {
+				resultWhole++;
+				resultNum = (resultDenom - resultNum)*-1;
+			} else if (resultWhole > 0 && resultNum*1.0/resultDenom < 0) {
+				resultWhole--;
+				resultNum = (resultDenom - resultNum)*-1;
+			}
 			result = format(resultWhole, resultNum, resultDenom);
 		} else if (operator.equals("-")) {
 			int resultWhole = value1Whole - value2Whole;
@@ -54,18 +64,34 @@ public class FracCalc {
 			int resultDenom = value1Denom * value2Denom;
 			resultWhole += resultNum / resultDenom;
 			resultNum = resultNum % resultDenom;
+			int factor = simplify(resultNum, resultDenom);
+			resultNum /= factor;
+			resultDenom /= factor;
+			if (resultWhole < 0 && resultNum*1.0/resultDenom > 0) {
+				resultWhole++;
+				resultNum = (resultDenom - resultNum)*-1;
+			} else if (resultWhole > 0 && resultNum*1.0/resultDenom < 0) {
+				resultWhole--;
+				resultNum = (resultDenom - resultNum)*-1;
+			}
 			result = format(resultWhole, resultNum, resultDenom);
 		} else if (operator.equals("*")) {
 			int resultDenom = value1Denom * value2Denom;
 			int resultNum = (value1Whole * value1Denom + value1Num) * (value2Whole * value2Denom + value2Num);
 			int resultWhole = resultNum / resultDenom;
 			resultNum = resultNum % resultDenom;
+			int factor = simplify(resultNum, resultDenom);
+			resultNum /= factor;
+			resultDenom /= factor;
 			result = format(resultWhole, resultNum, resultDenom);
 		} else if (operator.equals("/")) {
 			int resultDenom = value1Denom * (value2Num + value2Whole * value2Denom);
 			int resultNum = (value1Whole * value1Denom + value1Num) * (value2Denom);
 			int resultWhole = resultNum / resultDenom;
 			resultNum = resultNum % resultDenom;
+			int factor = simplify(resultNum, resultDenom);
+			resultNum /= factor;
+			resultDenom /= factor;
 			result = format(resultWhole, resultNum, resultDenom);
 		}
 		return result;
@@ -118,18 +144,17 @@ public class FracCalc {
 	}
 
 	public static int simplify(int num, int denom) {
-		int gcf = 1;
-		for (int i = 1; i <= num && i <= denom; i++) {
-			if (i % num == 0 && i % denom == 0) {
-				gcf = i;
-			}
+		if (denom==0){
+			return num;
 		}
-		return gcf;
+		return simplify(denom, num%denom);
 	}
 
 	public static String format(int whole, int num, int denom) {
 		String value = "";
 		if (whole != 0) {
+			value = "" + whole;
+		} else if (whole == 0 && num == 0) {
 			value = "" + whole;
 		}
 		if (whole != 0 && num != 0) {
@@ -137,7 +162,7 @@ public class FracCalc {
 		}
 		if (num != 0 && denom != 1) {
 			if (whole < 0) {
-				value = value + num * -1 + "/" + denom;
+				value = value + Math.abs(num) + "/" + Math.abs(denom);
 			} else
 				value = value + num + "/" + denom;
 		}
