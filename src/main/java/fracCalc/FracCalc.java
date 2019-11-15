@@ -50,12 +50,12 @@ public class FracCalc {
 			int factor = simplify(resultNum, resultDenom);
 			resultNum /= factor;
 			resultDenom /= factor;
-			if (resultWhole < 0 && resultNum*1.0/resultDenom > 0) {
+			if (resultWhole < 0 && resultNum * 1.0 / resultDenom > 0) {
 				resultWhole++;
-				resultNum = (resultDenom - resultNum)*-1;
-			} else if (resultWhole > 0 && resultNum*1.0/resultDenom < 0) {
+				resultNum = (resultDenom - resultNum) * -1;
+			} else if (resultWhole > 0 && resultNum * 1.0 / resultDenom < 0) {
 				resultWhole--;
-				resultNum = (resultDenom - resultNum)*-1;
+				resultNum = (resultDenom - resultNum) * -1;
 			}
 			result = format(resultWhole, resultNum, resultDenom);
 		} else if (operator.equals("-")) {
@@ -67,12 +67,12 @@ public class FracCalc {
 			int factor = simplify(resultNum, resultDenom);
 			resultNum /= factor;
 			resultDenom /= factor;
-			if (resultWhole < 0 && resultNum*1.0/resultDenom > 0) {
+			if (resultWhole < 0 && resultNum * 1.0 / resultDenom > 0) {
 				resultWhole++;
-				resultNum = (resultDenom - resultNum)*-1;
-			} else if (resultWhole > 0 && resultNum*1.0/resultDenom < 0) {
+				resultNum = (resultDenom - resultNum) * -1;
+			} else if (resultWhole > 0 && resultNum * 1.0 / resultDenom < 0) {
 				resultWhole--;
-				resultNum = (resultDenom - resultNum)*-1;
+				resultNum = (resultDenom - resultNum) * -1;
 			}
 			result = format(resultWhole, resultNum, resultDenom);
 		} else if (operator.equals("*")) {
@@ -125,7 +125,7 @@ public class FracCalc {
 			value = "0";
 		}
 		if (takeFrom.startsWith("-") && takeFrom.contains("_")) {
-			return Integer.parseInt(value)*-1;
+			return Integer.parseInt(value) * -1;
 		} else {
 			return Integer.parseInt(value);
 		}
@@ -143,13 +143,17 @@ public class FracCalc {
 		return Integer.parseInt(value);
 	}
 
+	// takes in an int num and an int denom to return
+	// the greatest common factor of the two
 	public static int simplify(int num, int denom) {
-		if (denom==0){
+		if (denom == 0) {
 			return num;
 		}
-		return simplify(denom, num%denom);
+		return simplify(denom, num % denom);
 	}
 
+	// takes in an int whole, an int num, and an int denom
+	// and formats them properly to return them
 	public static String format(int whole, int num, int denom) {
 		String value = "";
 		if (whole != 0) {
