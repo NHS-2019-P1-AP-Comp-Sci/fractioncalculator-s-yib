@@ -11,13 +11,18 @@ public class FracCalc {
 		// TODO: Read the input from the user and call produceAnswer with an equation
 		Scanner sc = new Scanner(System.in);
 		String equation = "";
-		System.out.println("Fraction Calculator");
+		System.out.println("Fraction Calculator\n");
 		System.out.println("Fraction format: whole_numerator/denominator (Ex: 1_1/2)");
-		System.out.println("Operators: +, -, *, /\n");
-		while (equation != "quit") {
-			System.out.println("Values to calculate?\n");
+		System.out.println("Operators: +, -, *, /");
+		System.out.println("\"quit\" to end program.\n");
+		while (!equation.equals("quit")) {
+			System.out.println("Values to calculate?");
 			equation = sc.nextLine();
+			if (!equation.equals("quit")) {
 			System.out.println(produceAnswer(equation)+"\n");
+			} else {
+				System.out.println("Program ended.");
+			}
 		}
 		sc.close();
 	}
