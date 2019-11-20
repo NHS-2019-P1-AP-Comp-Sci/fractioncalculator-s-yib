@@ -19,7 +19,7 @@ public class FracCalc {
 			System.out.println("Values to calculate?");
 			equation = sc.nextLine();
 			if (!equation.equals("quit")) {
-			System.out.println(produceAnswer(equation)+"\n");
+				System.out.println(produceAnswer(equation) + "\n");
 			} else {
 				System.out.println("Program ended.");
 			}
@@ -51,38 +51,24 @@ public class FracCalc {
 		int value2Denom = returnFracDenom(value2);
 		String result = "";
 		if (operator.equals("+")) {
-			int resultWhole = value1Whole + value2Whole;
-			int resultNum = (value1Num * value2Denom) + (value2Num * value1Denom);
+			int resultNum = ((value1Num + value1Whole * value1Denom) * value2Denom)
+					+ ((value2Num + value2Whole * value2Denom) * value1Denom);
 			int resultDenom = value1Denom * value2Denom;
-			resultWhole += resultNum / resultDenom;
+			int resultWhole = resultNum / resultDenom;
 			resultNum = resultNum % resultDenom;
 			int factor = simplify(resultNum, resultDenom);
 			resultNum /= factor;
 			resultDenom /= factor;
-			if (resultWhole < 0 && resultNum * 1.0 / resultDenom > 0) {
-				resultWhole++;
-				resultNum = (resultDenom - resultNum) * -1;
-			} else if (resultWhole > 0 && resultNum * 1.0 / resultDenom < 0) {
-				resultWhole--;
-				resultNum = (resultDenom - resultNum) * -1;
-			}
 			result = format(resultWhole, resultNum, resultDenom);
 		} else if (operator.equals("-")) {
-			int resultWhole = value1Whole - value2Whole;
-			int resultNum = (value1Num * value2Denom) - (value2Num * value1Denom);
+			int resultNum = ((value1Num + value1Whole * value1Denom) * value2Denom)
+					- ((value2Num + value2Whole * value2Denom) * value1Denom);
 			int resultDenom = value1Denom * value2Denom;
-			resultWhole += resultNum / resultDenom;
+			int resultWhole = resultNum / resultDenom;
 			resultNum = resultNum % resultDenom;
 			int factor = simplify(resultNum, resultDenom);
 			resultNum /= factor;
 			resultDenom /= factor;
-			if (resultWhole < 0 && resultNum * 1.0 / resultDenom > 0) {
-				resultWhole++;
-				resultNum = (resultDenom - resultNum) * -1;
-			} else if (resultWhole > 0 && resultNum * 1.0 / resultDenom < 0) {
-				resultWhole--;
-				resultNum = (resultDenom - resultNum) * -1;
-			}
 			result = format(resultWhole, resultNum, resultDenom);
 		} else if (operator.equals("*")) {
 			int resultDenom = value1Denom * value2Denom;
